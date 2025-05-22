@@ -12,7 +12,7 @@ public interface CategoryService {
 	boolean saveCategory(CategoryDto category);
 	List<CategoryDto> getAllCategory();
 	List<CategoryResponse> getAllActiveCategory();
-	CategoryResponse getById(Integer id);
+	CategoryResponse getById(Integer id) throws Exception;
 	Boolean deleteCategoryById(Integer id);
 
 }

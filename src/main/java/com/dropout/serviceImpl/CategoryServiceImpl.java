@@ -3,11 +3,12 @@ package com.dropout.serviceImpl;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
+
 
 import com.dropout.dto.CategoryDto;
 import com.dropout.dto.CategoryResponse;
 import com.dropout.entity.Category;
+import com.dropout.exceptions.ResourceNotFoundException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,11 +76,14 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryResponse getById(Integer id) {
-		Optional<Category> category = categoryRepository.findByIdAndIsDeletedFalse(id);
-		if (category.isPresent()) {
-			Category category2 = category.get();
-			return modelMapper.map(category2, CategoryResponse.class);
+	public CategoryResponse getById(Integer id) throws Exception {
+		Category category = categoryRepository.findByIdAndIsDeletedFalse(id)
+				.orElseThrow(()->new ResourceNotFoundException("Category with id: "+id+" not found"));
+		if (!ObjectUtils.isEmpty(category)) {
+			if(category.getName()==null) {
+				throw new IllegalArgumentException("Name is null");
+			}
+			return modelMapper.map(category, CategoryResponse.class);
 		}
 
 		return null;

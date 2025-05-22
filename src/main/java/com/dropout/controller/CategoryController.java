@@ -20,6 +20,9 @@ import com.dropout.dto.CategoryResponse;
 import com.dropout.entity.Category;
 import com.dropout.service.CategoryService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {
@@ -63,15 +66,13 @@ public class CategoryController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getCategoryById(@PathVariable Integer id) {
+	public ResponseEntity<?> getCategoryById(@PathVariable Integer id) throws Exception {
 
 		CategoryResponse categoryResponse = categoryService.getById(id);
 		if (ObjectUtils.isEmpty(categoryResponse)) {
 			return new ResponseEntity<>("Category with "+id+" not found",HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
 		}
-
+		return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
