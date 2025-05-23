@@ -17,6 +17,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.dropout.repository.CategoryRepository;
 import com.dropout.service.CategoryService;
+import com.dropout.util.Validation;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -26,10 +27,13 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private Validation validation;
 
 	@Override
 	public boolean saveCategory(CategoryDto categoryDto) {
-
+		validation.validateCategory(categoryDto);
 		Category savedCategory = modelMapper.map(categoryDto, Category.class);
 		if (ObjectUtils.isEmpty(savedCategory.getId())) {
 			savedCategory.setIsDeleted(false);

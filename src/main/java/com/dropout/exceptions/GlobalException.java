@@ -29,5 +29,12 @@ public class GlobalException {
 		log.info("GlobalException :: handleNullPointerException");
 		return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<?> handleValidationException(ValidationException e) {
+	    log.info("GlobalException :: handleValidationException");
+	    return new ResponseEntity<>(e.getErrors(), HttpStatus.BAD_REQUEST);
+	}
+
 
 }

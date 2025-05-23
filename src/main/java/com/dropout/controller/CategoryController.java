@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dropout.dto.CategoryDto;
 import com.dropout.dto.CategoryResponse;
-import com.dropout.entity.Category;
 import com.dropout.service.CategoryService;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +29,7 @@ public class CategoryController {
 
 	@Autowired
 	private CategoryService categoryService;
+
 
 	@PostMapping("/save-category")
 	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
