@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.dropout.dto.CategoryDto;
 import com.dropout.dto.CategoryResponse;
 import com.dropout.entity.Category;
+import com.dropout.exceptions.ExistsDataException;
 import com.dropout.exceptions.ResourceNotFoundException;
 
 import org.modelmapper.ModelMapper;
@@ -33,7 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public boolean saveCategory(CategoryDto categoryDto) {
+		//Validation Checks
 		validation.validateCategory(categoryDto);
+		
+		//Already Existing category name
+		Boolean existsByName = categoryRepository.existsByName(categoryDto.getName());
+		if(existsByName) {
+			throw new ExistsDataException("Duplicate category name: "+categoryDto.getName());
+		}
 		Category savedCategory = modelMapper.map(categoryDto, Category.class);
 		if (ObjectUtils.isEmpty(savedCategory.getId())) {
 			savedCategory.setIsDeleted(false);

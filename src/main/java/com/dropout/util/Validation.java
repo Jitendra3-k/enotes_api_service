@@ -24,8 +24,8 @@ public class Validation {
 			if (ObjectUtils.isEmpty(categoryDto.getName())) {
 				error.put("name", "Name can't be null or empty");
 			} else {
-				if (categoryDto.getName().length() < 10) {
-					error.put("name", "Name length shouln't be less than 10 ");
+				if (categoryDto.getName().length() < 3) {
+					error.put("name", "Name length shouln't be less than 3 ");
 				}
 				if (categoryDto.getName().length() > 100) {
 					error.put("name", "Name length shouln't be greater than 100 ");
@@ -44,6 +44,11 @@ public class Validation {
 
 			if (ObjectUtils.isEmpty(categoryDto.getIsActive())) {
 				error.put("isActive", "isActive Can't be null or empty");
+			}else {
+				if(categoryDto.getIsActive()!=Boolean.FALSE.booleanValue() 
+						&& categoryDto.getIsActive()!=Boolean.TRUE.booleanValue()) {
+					error.put("isActive", "isActive value is invalid it should be true or false");
+				}
 			}
 
 		}

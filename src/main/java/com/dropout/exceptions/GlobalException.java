@@ -2,6 +2,7 @@ package com.dropout.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -32,8 +33,21 @@ public class GlobalException {
 	
 	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<?> handleValidationException(ValidationException e) {
-	    log.info("GlobalException :: handleValidationException");
+	    log.info("GlobalException :: ValidationException");
 	    return new ResponseEntity<>(e.getErrors(), HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+	    log.info("GlobalException :: HttpMessageNotReadableException");
+	    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(ExistsDataException.class)
+	public ResponseEntity<?> handleExistsDataException(ExistsDataException e) {
+	    log.info("GlobalException :: ExistsDataException");
+	    return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 	}
 
 
