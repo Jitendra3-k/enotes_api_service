@@ -40,7 +40,7 @@ public class CommonUtil {
 		GenericResponse genericResponse=GenericResponse.builder()
 				.httpStatusCode(httpStatus)
 				.status("Failed")
-				.message("Failed")
+				.message(message)
 				.build();
 		return genericResponse.create();
 	}

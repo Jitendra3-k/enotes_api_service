@@ -1,5 +1,6 @@
 package com.dropout.handler;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,7 +26,8 @@ public class GenericResponse {
 	
 	public ResponseEntity<?> create(){
 		Map<String, Object> errors=new LinkedHashMap<>();
-		errors.put("Status Code", httpStatusCode);
+		errors.put("timestamp", LocalDateTime.now());
+		errors.put("Status Code", httpStatusCode.value());
 		errors.put("Status ", status);
 		if(!ObjectUtils.isEmpty(data)) {
 			errors.put("data ", data);
@@ -34,5 +36,6 @@ public class GenericResponse {
 		
 		return new ResponseEntity<>(errors,httpStatusCode);
 	}
+	
 
 }
