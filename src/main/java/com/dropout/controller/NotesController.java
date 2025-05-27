@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dropout.dto.NotesDto;
 import com.dropout.service.NotesService;
@@ -24,8 +26,8 @@ public class NotesController {
 	private NotesService notesService;
 	
 	@PostMapping("/save-notes")
-	public ResponseEntity<?> saveNote(@RequestBody NotesDto notesDto) throws Exception{
-		boolean saveNotes = notesService.saveNotes(notesDto);
+	public ResponseEntity<?> saveNote(@RequestParam(required = false) String notes,@RequestParam MultipartFile file) throws Exception{
+		boolean saveNotes = notesService.saveNotes(notes,file);
 		if(saveNotes) {
 			return CommonUtil.createBuildResponseMessage("Notes Saved Successfully", HttpStatus.CREATED);
 		}
